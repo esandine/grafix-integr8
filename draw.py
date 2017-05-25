@@ -29,8 +29,26 @@ def sortPoints(matrix, point):
             return matrix[point+2],matrix[point+1],matrix[point]
 
 def fillTriangle(matrix, point, screen):
-    print sortPoints(matrix, point)
-    
+    coors = sortPoints(matrix, point)
+    bx = float(coors[0][0])
+    mx = float(coors[1][0])
+    tx = float(coors[2][0])
+    by = coors[0][1]
+    my = coors[1][1]
+    ty = coors[2][1]
+    y = int(by)
+    x0 = bx
+    x1 = bx
+    while y <= int(ty):
+        x0 += (tx-bx)/(my-by)
+        if y < my:
+            x1 += (mx-bx)/(my-by)
+        else:
+            x1 += (tx-mx)/(ty-my)
+
+        draw_line(int(x0), y, int(x1), y, screen, [0,0,0])
+        y+=1
+
 def draw_polygons( matrix, screen, color ):
     if len(matrix) < 2:
         print 'Need at least 3 points to draw'
@@ -251,7 +269,6 @@ def add_point( matrix, x, y, z=0 ):
 
 
 def draw_line( x0, y0, x1, y1, screen, color ):
-
     #swap points if going right -> left
     if x0 > x1:
         xt = x0
