@@ -8,6 +8,29 @@ def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x1, y1, z1);
     add_point(polygons, x2, y2, z2);
 
+def sortPoints(matrix, point):
+    y1 = matrix[point][1]
+    y2 = matrix[point+1][1]
+    y3 = matrix[point+2][1]
+    if y1==min(y1,y2,y3):
+        if y2 < y3:
+            return matrix[point],matrix[point+1],matrix[point+2]
+        else:
+            return matrix[point],matrix[point+2],matrix[point+1]
+    elif y2==min(y1, y2, y3):
+        if y1 < y3:
+            return matrix[point+1],matrix[point],matrix[point+2]
+        else:
+            return matrix[point+1],matrix[point+2],matrix[point]
+    else:
+        if y1 < y2:
+            return matrix[point+2],matrix[point],matrix[point+1]
+        else:
+            return matrix[point+2],matrix[point+1],matrix[point]
+
+def fillTriangle(matrix, point, screen):
+    print sortPoints(matrix, point)
+    
 def draw_polygons( matrix, screen, color ):
     if len(matrix) < 2:
         print 'Need at least 3 points to draw'
@@ -18,21 +41,7 @@ def draw_polygons( matrix, screen, color ):
 
         normal = calculate_normal(matrix, point)[:]
         if normal[2] > 0:
-            draw_line( int(matrix[point][0]),
-                       int(matrix[point][1]),
-                       int(matrix[point+1][0]),
-                       int(matrix[point+1][1]),
-                       screen, color)
-            draw_line( int(matrix[point+2][0]),
-                       int(matrix[point+2][1]),
-                       int(matrix[point+1][0]),
-                       int(matrix[point+1][1]),
-                       screen, color)
-            draw_line( int(matrix[point][0]),
-                       int(matrix[point][1]),
-                       int(matrix[point+2][0]),
-                       int(matrix[point+2][1]),
-                       screen, color)    
+            fillTriangle(matrix, point, screen)
         point+= 3
 
 
