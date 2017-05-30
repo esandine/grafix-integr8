@@ -30,9 +30,9 @@ def sortPoints(matrix, point):
             return matrix[point+2],matrix[point+1],matrix[point]
 
 def fillTriangle(matrix, point, screen):
-    a = random.randint(0,256)
-    b = random.randint(0,256)
-    c = random.randint(0,256)
+    a = random.randint(0,255)
+    b = random.randint(0,255)
+    c = random.randint(0,255)
     coors = sortPoints(matrix, point)
     bx = float(coors[0][0])
     mx = float(coors[1][0])
@@ -43,13 +43,13 @@ def fillTriangle(matrix, point, screen):
     y = int(by)
     x0 = bx
     x1 = bx
+
     while y <= int(ty):
         x0 += (tx-bx)/(my-by)
         if y < my:
             x1 += (mx-bx)/(my-by)
         else:
             x1 += (tx-mx)/(ty-my)
-
         draw_line(int(x0), y, int(x1), y, screen, [a,b,c])
         y+=1
 
