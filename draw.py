@@ -2,6 +2,7 @@ from display import *
 from matrix import *
 from math import *
 from gmath import *
+import random
 
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x0, y0, z0);
@@ -29,6 +30,9 @@ def sortPoints(matrix, point):
             return matrix[point+2],matrix[point+1],matrix[point]
 
 def fillTriangle(matrix, point, screen):
+    a = random.randint(0,256)
+    b = random.randint(0,256)
+    c = random.randint(0,256)
     coors = sortPoints(matrix, point)
     bx = float(coors[0][0])
     mx = float(coors[1][0])
@@ -46,7 +50,7 @@ def fillTriangle(matrix, point, screen):
         else:
             x1 += (tx-mx)/(ty-my)
 
-        draw_line(int(x0), y, int(x1), y, screen, [0,0,0])
+        draw_line(int(x0), y, int(x1), y, screen, [a,b,c])
         y+=1
 
 def draw_polygons( matrix, screen, color ):
